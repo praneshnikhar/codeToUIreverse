@@ -1,0 +1,24 @@
+
+
+{
+  "name": "code-to-ui-reverse-lookup",
+  "version": "0.1.0",
+  "description": "Browser extension to reverse map React UI elements to source code lines on GitHub",
+  "type": "module", 
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "rollup": "^3.29.5",
+    "rollup-plugin-chrome-extension": "^3.6.15",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "source-map": "^0.7.4"
+  }
+  
+}

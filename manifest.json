@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Code-to-UI Reverse Lookup",
+    "version": "0.1.0",
+    "permissions": ["scripting", "activeTab", "storage"],
+    "background": { "service_worker": "background.js" },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "run_at": "document_idle"
+      }
+    ],
+    "host_permissions": ["*://*/*"]
+  }
+  
