@@ -10,16 +10,12 @@ chrome.runtime.onMessage.addListener(async (msg, sender) => {
   const tabId = sender.tab.id;
 
   try {
-    // 1. Execute script in the page context to get the debug source from React Fiber of the clicked element
-    // We don't have the exact clicked DOM node from content.js due to message serialization,
-    // so execute in page and retrieve the element under mouse or focused element
+  
 
     const fiberInfo = await chrome.scripting.executeScript({
       target: { tabId },
       func: () => {
-        /**
-         * Reuse getReactFiberForNode definition inside injection
-         */
+        
         function getReactFiberForNode(domNode) {
           if (!domNode) return null;
 
@@ -47,7 +43,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender) => {
           return traverse(rootFiber);
         }
 
-        // Find element at the last mouse position (approximation) or active element
+       
         const el = document.activeElement || document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
         return getReactFiberForNode(el);
       },
@@ -64,13 +60,13 @@ chrome.runtime.onMessage.addListener(async (msg, sender) => {
       return;
     }
 
-    // 2. Fetch source map
+    
     const pageUrl = sender.tab.url;
     const sourceMapUrl = await fetchSourceMapUrl(pageUrl);
     const response = await fetch(sourceMapUrl);
     const rawSourceMap = await response.json();
 
-    // 3. Resolve original position
+    
     const originalPos = resolveOriginalPosition(rawSourceMap, {
       line: lineNumber,
       column: columnNumber,
@@ -81,7 +77,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender) => {
       return;
     }
 
-    // 4. Build URL to GitHub and open it
+    
     const githubUrl = makeGithubUrl(originalPos.source, originalPos.line);
 
     chrome.tabs.create({ url: githubUrl });
